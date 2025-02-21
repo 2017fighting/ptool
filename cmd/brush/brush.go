@@ -327,8 +327,9 @@ func brush(cmd *cobra.Command, args []string) (err error) {
 
 	fmt.Printf("Finish brushing %d sites: successSites=%d, skipSites=%d; Added / Deleted torrents: %d / %d\n",
 		len(sitenames), cntSuccessSite, cntSkipSite, cntAddTorrents, cntDeleteTorrents)
-	if cntSuccessSite == 0 {
-		return fmt.Errorf("no sites successed")
+	cntFailedSite := int64(len(sitenames)) - cntSuccessSite - cntSkipSite
+	if cntFailedSite > 0 {
+		return fmt.Errorf("siteFailed=%d", cntFailedSite)
 	}
 	return nil
 }
